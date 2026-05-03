@@ -53,7 +53,7 @@ async def recipes(recipe: schemas.RecipeIn) -> models.Recipe:
          summary='The list af all recipes',
          description='Shows the list af all recipes'
          )
-async def recipes() -> List[models.Recipe]:
+async def get_recipes() -> List[models.Recipe]:
     res = await session.execute(select(models.Recipe).
                                 order_by(models.Recipe.views.desc(),
                                 models.Recipe.cooking_time.desc())
