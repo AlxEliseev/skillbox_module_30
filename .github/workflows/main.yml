@@ -2,6 +2,8 @@ name: my first CI pipeline
 
 on:
   pull_request:
+  push:
+    branches: [ main ]
 
 jobs:
   test:
