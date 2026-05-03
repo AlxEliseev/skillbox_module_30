@@ -1,10 +1,10 @@
 from typing import List, Annotated
 
 from fastapi import FastAPI, Path, HTTPException
-# from sqlalchemy.future import select
+
 from sqlalchemy import select, update
 from contextlib import asynccontextmanager
-from models import IngredientsInRecipes
+
 import models
 import schemas
 from database import engine, session
