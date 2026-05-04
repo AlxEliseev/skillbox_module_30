@@ -27,18 +27,21 @@ app = FastAPI(lifespan=lifespan)
           summary='Add new recipe',
           description='Adds new recipe with ingredients got by id')
 async def recipes(recipe: schemas.RecipeIn) -> models.Recipe:
-    recipe = recipe.dict()
+    recipe_: dict = recipe.model_dump()
 
     ingredients = []
-    for ingredient_id in recipe.pop('ingredients'):
-        ingredient = await session.execute(select(models.Ingredient).where(models.Ingredient.id==ingredient_id))
-        ingredient = ingredient.scalar()
+    for ingredient_id in recipe.pop("ingredients"):
+        ingredient = (
+            await session.scalars(
+                select(models.Ingredient).where(models.Ingredient.id == ingredient_id)
+            )
+        ).one_or_none()
         if ingredient:
             ingredients.append(ingredient)
         else:
             raise HTTPException(400, f'No ingredient with id # {ingredient_id}. Create ingredient first')
 
-    new_recipe = models.Recipe(**recipe)
+    new_recipe = models.Recipe(**recipe_)
     session.add(new_recipe)
 
     for ingr in ingredients:
@@ -58,7 +61,7 @@ async def get_recipes() -> List[models.Recipe]:
                                 order_by(models.Recipe.views.desc(),
                                 models.Recipe.cooking_time.desc())
                                 )
-    return res.scalars().all()
+    return list(res.scalars().all())
 
 
 @app.get('/recipes/{recipe_id}', response_model=schemas.RecipeOutDetailed,
