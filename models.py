@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, Time
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, Integer, String, Time
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.orm import relationship
 
 from database import Base
 

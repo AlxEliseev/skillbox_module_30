@@ -1,8 +1,7 @@
 from contextlib import asynccontextmanager
-from typing import List, Annotated
+from typing import Annotated, List
 
-from fastapi import FastAPI, Path, HTTPException
-
+from fastapi import FastAPI, HTTPException, Path
 from sqlalchemy import select, update
 
 import models
