@@ -30,7 +30,7 @@ async def recipes(recipe: schemas.RecipeIn) -> models.Recipe:
     recipe_: dict = recipe.model_dump()
 
     ingredients = []
-    for ingredient_id in recipe.pop("ingredients"):
+    for ingredient_id in recipe_.pop("ingredients"):
         ingredient = (
             await session.scalars(
                 select(models.Ingredient).where(models.Ingredient.id == ingredient_id)
