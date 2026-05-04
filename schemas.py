@@ -8,7 +8,8 @@ class BaseIngredient(BaseModel):
     description: str = Field(description="Ingredient description")
 
 
-class IngredientIn(BaseIngredient): ...
+class IngredientIn(BaseIngredient):
+    ...
 
 
 class IngredientOut(BaseIngredient):
